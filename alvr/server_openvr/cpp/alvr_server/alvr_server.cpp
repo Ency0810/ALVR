@@ -164,6 +164,11 @@ public:
         if (vr::VRServerDriverHost()->IsExiting() && !shutdown_called) {
             Debug("DriverProvider: Received shutdown event");
 
+#ifdef __linux__
+            if (this->hmd && this->hmd->m_directModeComponent) {
+                this->hmd->m_directModeComponent->Teardown();
+            }
+#endif
             shutdown_called = true;
             ShutdownRuntime();
         }
@@ -196,6 +201,8 @@ const unsigned char* FFR_SHADER_COMP_SPV_PTR;
 unsigned int FFR_SHADER_COMP_SPV_LEN;
 const unsigned char* RGBTOYUV420_SHADER_COMP_SPV_PTR;
 unsigned int RGBTOYUV420_SHADER_COMP_SPV_LEN;
+const unsigned char* LAYER_SHADER_COMP_SPV_PTR;
+unsigned int LAYER_SHADER_COMP_SPV_LEN;
 
 const char* g_sessionPath;
 const char* g_driverRootDir;
@@ -371,7 +378,7 @@ void DeinitializeStreaming() {
     }
 }
 
-void SendVSync(double offsetSeconds) { vr::VRServerDriverHost()->VsyncEvent(offsetSeconds); }
+void SendVSync() { vr::VRServerDriverHost()->VsyncEvent(0.0); }
 
 void RequestIDR() {
 #ifdef _WIN32

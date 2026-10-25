@@ -192,6 +192,8 @@ extern "C" const unsigned char* FFR_SHADER_COMP_SPV_PTR;
 extern "C" unsigned int FFR_SHADER_COMP_SPV_LEN;
 extern "C" const unsigned char* RGBTOYUV420_SHADER_COMP_SPV_PTR;
 extern "C" unsigned int RGBTOYUV420_SHADER_COMP_SPV_LEN;
+extern "C" const unsigned char* LAYER_SHADER_COMP_SPV_PTR;
+extern "C" unsigned int LAYER_SHADER_COMP_SPV_LEN;
 
 extern "C" const char* g_sessionPath;
 extern "C" const char* g_driverRootDir;
@@ -222,22 +224,12 @@ extern "C" void SetOpenvrProps(void* instancePtr, unsigned long long deviceID);
 extern "C" void RegisterButtons(void* instancePtr, unsigned long long deviceID);
 extern "C" void WaitForVSync();
 
-// The vsync grid, in Rust. The driver starts and stops the announcer with its own lifetime, holds
-// Present against the grid, and reads the skipped tick count, without keeping a copy of any of it.
-extern "C" void StartVsyncAnnouncer();
-extern "C" void StopVsyncAnnouncer();
-extern "C" void PaceAfterPresent(unsigned int throttleFrames);
-extern "C" unsigned int TakeSkippedVsyncs();
-
 extern "C" void CppInit(bool earlyHmdInitialization, Settings settings);
 extern "C" void* CppOpenvrEntryPoint(const char* pInterfaceName, int* pReturnCode);
 extern "C" void InitializeRuntime();
 extern "C" bool InitializeStreaming(Settings settings);
 extern "C" void DeinitializeStreaming();
-// Called by the vsync grid in Rust, which owns the schedule. Declaring the vsync is the only part
-// of it that has to stay on this side, because the interface is C++. The offset is in seconds and
-// runs negative when the announcement lands after the point it describes.
-extern "C" void SendVSync(double offsetSeconds);
+extern "C" void SendVSync();
 extern "C" void RequestIDR();
 extern "C" void SetTracking(
     unsigned long long targetTimestampNs,
