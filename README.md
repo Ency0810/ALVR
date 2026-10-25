@@ -50,4 +50,3 @@ git rebase --onto upstream/master 0a778405 alvr-linux-fix
 
 1. PR #3425：Linux direct mode / texture / frame sync 修正。
 2. `alvr/xtask/src/dependencies.rs`：`nv-codec-headers` `12.1.14.0` → `13.0.19.0`。
-3. `README.md`：本說明。
