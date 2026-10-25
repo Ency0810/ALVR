@@ -50,3 +50,16 @@ git rebase --onto upstream/master 0a778405 alvr-linux-fix
 
 1. PR #3425：Linux direct mode / texture / frame sync 修正。
 2. `alvr/xtask/src/dependencies.rs`：`nv-codec-headers` `12.1.14.0` → `13.0.19.0`。
+
+## 小技巧：NVENC header 版本
+
+```bash
+# 目前 driver
+nvidia-smi --query-gpu=driver_version --format=csv,noheader
+
+# 目前 pin 的 headers 要求
+curl -fsSL https://raw.githubusercontent.com/FFmpeg/nv-codec-headers/n13.0.19.0/README | grep -A2 "Minimum required"
+```
+
+`13.0.19.0` 需要 driver **570.0+**；headers 不能比 driver 新，比 driver 舊通常可以。
+查其他版本就把 `n13.0.19.0` 換成對應 tag。
