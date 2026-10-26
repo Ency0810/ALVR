@@ -3,16 +3,26 @@
 個人 fork，給 **CachyOS + NVIDIA + SteamVR + Quest 3 有線** 使用。
 官方 repo：<https://github.com/alvr-org/ALVR>
 
-`alvr-linux-fix` = 官方 master + **PR #3425**（Linux direct mode / frame sync）+ `nv-codec-headers` pin。
-`master` 保持乾淨，只用來對照官方。
+`linux-fix` = 官方 `official` + **PR #3425**（Linux direct mode / frame sync）+ `nv-codec-headers` pin。
+`official` 是官方 master 的鏡像，保持乾淨，只用來對照。
 
-比較：<https://github.com/Ency0810/ALVR/compare/master...alvr-linux-fix>
+比較：<https://github.com/Ency0810/alvr-linux-fix/compare/official...linux-fix>
+
+## 預編譯版本
+
+不想自己編譯的話，直接抓 [Releases](https://github.com/Ency0810/alvr-linux-fix/releases)：
+
+- `alvr_streamer_linux.tar.gz` — Linux streamer
+- `alvr_client_android.apk` — Quest client
+
+**streamer 與 APK 必須來自同一個 release**（版本 `21.0.0-dev14`，與官方 `20.14.1` 不相容）。
+APK 用 debug key 簽章，安裝前要先解除安裝官方版本。
 
 ## 編譯
 
 ```bash
 cd ~/ALVR
-git checkout alvr-linux-fix
+git checkout linux-fix
 cargo xtask build-streamer --release
 ```
 
@@ -28,7 +38,7 @@ cargo xtask prepare-deps --platform linux
 
 ```bash
 git fetch upstream
-git checkout alvr-linux-fix
+git checkout linux-fix
 git merge upstream/master
 cargo xtask build-streamer --release
 ```
@@ -36,7 +46,7 @@ cargo xtask build-streamer --release
 PR #3425 合進官方後，把本地 commit 搬到新 upstream：
 
 ```bash
-git rebase --onto upstream/master 0a778405 alvr-linux-fix
+git rebase --onto upstream/master 0a778405 linux-fix
 ```
 
 （`0a778405` 是目前本地的 PR #3425 merge commit。）
