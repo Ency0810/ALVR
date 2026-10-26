@@ -121,6 +121,7 @@ jobs:
             --out artifacts/alvr_client_android.apk \
             artifacts/alvr_client_android_unsigned.apk
           rm artifacts/alvr_client_android_unsigned.apk
+          rm -f artifacts/*.idsig
           ls -lh artifacts/
 
       - uses: actions/upload-artifact@v7
